@@ -41,10 +41,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var viewController = storyboard.instantiateViewControllerWithIdentifier("LoginScreen")
         
         
-        if (NSUserDefaults.standardUserDefaults().boolForKey("logged_in"))
+        if (PFUser.currentUser() != nil)
         {
             //user is already logged in
-            viewController = storyboard.instantiateViewControllerWithIdentifier("MainScreen")
+            viewController = storyboard.instantiateViewControllerWithIdentifier("TabScreen")
             
         }
         

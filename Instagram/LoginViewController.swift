@@ -38,11 +38,11 @@ class LoginViewController: UIViewController {
             (success: Bool, error: NSError?) -> Void in
             if (success){
                 print ("woohoo")
+                self.loginPressed("woo")
                 
             }else{
                 print ("noooo")
-                NSUserDefaults.standardUserDefaults().setBool(true, forKey:"logged_in")
-                self.performSegueWithIdentifier("toMain", sender: newUser)
+                self.performSegueWithIdentifier("toTab", sender: newUser)
                 //TODO: check and handle error codes for parse
             }
             
@@ -67,8 +67,7 @@ class LoginViewController: UIViewController {
                 print("instantiation done")
                 self.presentViewController(viewctrl, animated: true, completion: nil)*/
                 
-                NSUserDefaults.standardUserDefaults().setBool(true, forKey: "logged_in")
-                self.performSegueWithIdentifier("toMain", sender: user)
+                self.performSegueWithIdentifier("toTab", sender: user)
                 
                 
                 print ("performed")

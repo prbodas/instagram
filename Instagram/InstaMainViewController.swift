@@ -7,15 +7,33 @@
 //
 
 import UIKit
+import Parse
 
 class InstaMainViewController: UIViewController, UIImagePickerControllerDelegate,
-    UINavigationControllerDelegate {
+    UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource {
 
+    @IBOutlet weak var tableView: UITableView!
+    
+    var tableDataArray:[PFObject] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.timerSelector()
+        
+        //set up refresh control
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), forControlEvents: UIControlEvents.ValueChanged)
+        tableView.insertSubview(refreshControl, atIndex: 0)
         
         //set noCameraView invisible
         noCameraView.hidden = true;
+        tableView.dataSource = self;
+        tableView.delegate = self;
+        
+        tableView.rowHeight = 300
+        //tableView.rowHeight = UITableViewAutomaticDimension
+        
+        NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: "timerSelector", userInfo: nil, repeats: true)
         
     }
 
@@ -80,8 +98,72 @@ class InstaMainViewController: UIViewController, UIImagePickerControllerDelegate
             })
         
     }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return tableDataArray.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier("postCell", forIndexPath: indexPath) as! PostCell
+        
+        let object = tableDataArray[tableDataArray.count - indexPath.row - 1]
+        //print(object)
+        
+        let pfile = object["media"]
+        pfile.getDataInBackgroundWithBlock{
+            (data:NSData?, error: NSError?) -> Void in
+            if (error == nil)
+            {
+                let image = UIImage(data:data!)
+                cell.displayerView.image = image
+            }
+        }
+        
+        var username = object["username"]
+        if (username == nil){username = "anonymous"}
+        
+        cell.usernameLabel.text = username as! String
+        return cell
+    }
 
+    
+    //timer refresh code
+    func timerSelector()
+    {
+        print("timerSelecting")
+        self.refreshTableView()
+        
+    }
 
+    
+    //control refresh actions
+    func refreshControlAction(refreshControl: UIRefreshControl) {
+        
+            self.refreshTableView()
+                                                                        
+            // Tell the refreshControl to stop spinning
+            refreshControl.endRefreshing()
+    }
+    
+    
+    func refreshTableView()
+    {
+        let query = PFQuery(className: "Post")
+        query.findObjectsInBackgroundWithBlock{
+            (objects:[PFObject]?, error: NSError?) -> Void in
+            if (error == nil)
+            {
+                self.tableDataArray = objects!
+                print("count:")
+                print(self.tableDataArray.count)
+            }else{
+                print ("error")
+            }
+            
+        }
+        tableView.reloadData()
+    }
     
     /*
     // MARK: - Navigation

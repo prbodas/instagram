@@ -10,6 +10,7 @@ import UIKit
 
 class EditPicViewController: UIViewController {
     
+    @IBOutlet weak var captionView: UITextView!
     
     @IBOutlet weak var imageDisplay: UIImageView!
 
@@ -17,7 +18,7 @@ class EditPicViewController: UIViewController {
         super.viewDidLoad()
         
         //erase prompt in textView when typing begins
-        captionTextView.clearsOnInsertion = true
+        captionView.clearsOnInsertion = true
         
     }
 
@@ -33,24 +34,24 @@ class EditPicViewController: UIViewController {
     
     @IBAction func doneButton(sender: AnyObject) {
         
+        //puts the post into the database
+        Post.postUserImage(imageDisplay.image, withCaption: captionView.text, withCompletion: nil)
+        
+        
         //segues back to the main screen
         let storyboard = self.storyboard!
         print("storyboard done")
-        let viewctrl = storyboard.instantiateViewControllerWithIdentifier("MainScreen")
+        let viewctrl = storyboard.instantiateViewControllerWithIdentifier("TabScreen")
         print("instantiation done")
-        let mainScreen = viewctrl as! InstaMainViewController
         print("cast doen")
-        self.presentViewController(mainScreen, animated: true, completion: {print ("controller presented")})
+        self.presentViewController(viewctrl, animated: true, completion: {print ("controller presented")})
         
     }
     
-    //caption code
-    @IBOutlet weak var captionTextView: UITextView!
     
 
     /*
     // MARK: - Navigation
-
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
