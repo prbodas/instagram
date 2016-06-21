@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,9 +17,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        
+        
+        // Initialize Parse
+        // Set applicationId and server based on the values in the Heroku settings.
+        // clientKey is not used on Parse open source unless explicitly configured
+        Parse.initializeWithConfiguration(
+            ParseClientConfiguration(block: { (configuration:ParseMutableClientConfiguration) -> Void in
+                configuration.applicationId = "ioerq9ri"
+                configuration.clientKey = "3pi49u2rowhff"  // set to nil assuming you have not set clientKey
+                configuration.server = "https://insta-cl.herokuapp.com/parse"
+            })
+        )
+        
+        //set storyboard to open the login screen if not logged in
+        
+        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        //assuming the user isn't logged in,
+        var viewController = storyboard.instantiateViewControllerWithIdentifier("LoginScreen")
+        
+        
+        if (NSUserDefaults.standardUserDefaults().boolForKey("logged_in"))
+        {
+            //user is already logged in
+            viewController = storyboard.instantiateViewControllerWithIdentifier("MainScreen")
+            
+        }
+        
+        self.window!.rootViewController = viewController
+        self.window!.makeKeyAndVisible()
+        
         return true
     }
-
+    
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
