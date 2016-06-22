@@ -7,13 +7,43 @@
 //
 
 import UIKit
+import Parse
 
-class UserProfileViewController: UIViewController {
+class UserProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
+    var tableDataArray = []
+    
+    @IBOutlet weak var tableView: UITableView!
+    
+    @IBOutlet weak var usernameLabel: UILabel!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        //get user
+        usernameLabel.text = PFUser.currentUser()?.username
 
-        // Do any additional setup after loading the view.
+        let query = PFQuery(className: "Post")
+        query.whereKey("username", equalTo: (PFUser.currentUser()?.username)!)
+        
+        query.findObjectsInBackgroundWithBlock  {
+            (objects:[PFObject]?, error: NSError?) -> Void in
+            if (error == nil)
+            {
+                self.tableDataArray = objects!
+                print("counterr:")
+                print(self.tableDataArray.count)
+            }else{
+                print ("error")
+            }
+            self.tableView.reloadData()
+        }
+        
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -21,7 +51,39 @@ class UserProfileViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("userPostCell", forIndexPath: indexPath) as! UserPostCell
+        
+        let object:PFObject = tableDataArray[tableDataArray.count - indexPath.row - 1] as! PFObject
+        //print(object)
+        
+        let pfile = object["media"]
+        pfile.getDataInBackgroundWithBlock{
+            (data:NSData?, error: NSError?) -> Void in
+            if (error == nil)
+            {
+                let image = UIImage(data:data!)
+                cell.displayerView.image = image
+            }
+        }
+        
+        if (object["timestamp"] == nil)
+        {
+            cell.timestampLabel.text = "time hidden"
+        }else{
+            cell.timestampLabel.text = object["timestamp"] as! String
+        }
+        
+        cell.captionLabel.text = object["caption"] as! String
+            
+        return cell
 
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return tableDataArray.count
+    }
+    
     /*
     // MARK: - Navigation
 

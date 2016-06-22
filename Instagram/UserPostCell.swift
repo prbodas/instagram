@@ -1,21 +1,20 @@
 //
-//  PostCell.swift
+//  UserPostCell.swift
 //  Instagram
 //
-//  Created by Prachi Bodas on 6/21/16.
+//  Created by Prachi Bodas on 6/22/16.
 //  Copyright © 2016 Prachi Bodas. All rights reserved.
 //
 
 import UIKit
-import Parse
 
-class PostCell: UITableViewCell {
+class UserPostCell: UITableViewCell {
 
     @IBOutlet weak var displayerView: UIImageView!
     
-    @IBOutlet weak var usernameLabel: UILabel!
-    
     @IBOutlet weak var captionLabel: UILabel!
+    
+    @IBOutlet weak var timestampLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

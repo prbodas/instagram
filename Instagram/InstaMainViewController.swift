@@ -18,7 +18,7 @@ class InstaMainViewController: UIViewController, UIImagePickerControllerDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.timerSelector()
+        self.refreshTableView()
         
         //set up refresh control
         let refreshControl = UIRefreshControl()
@@ -33,7 +33,7 @@ class InstaMainViewController: UIViewController, UIImagePickerControllerDelegate
         tableView.rowHeight = 300
         //tableView.rowHeight = UITableViewAutomaticDimension
         
-        NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: "timerSelector", userInfo: nil, repeats: true)
+        NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: "timerSelector", userInfo: nil, repeats: false)
         
     }
 
@@ -124,6 +124,9 @@ class InstaMainViewController: UIViewController, UIImagePickerControllerDelegate
         if (username == nil){username = "anonymous"}
         
         cell.usernameLabel.text = username as! String
+        
+        cell.captionLabel.text = object["caption"] as! String
+        
         return cell
     }
 
