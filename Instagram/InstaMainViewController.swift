@@ -10,11 +10,17 @@ import UIKit
 import Parse
 
 class InstaMainViewController: UIViewController, UIImagePickerControllerDelegate,
-    UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource {
+    UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     
+    var isDataLoading = false
+    
     var tableDataArray:[PFObject] = []
+    
+    //query offset variables
+    var offset = 20;
+    let increment = 20;
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -100,7 +106,13 @@ class InstaMainViewController: UIViewController, UIImagePickerControllerDelegate
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tableDataArray.count
+        
+        if (tableDataArray.count >= offset)
+        {
+            return offset
+        }else{
+            return tableDataArray.count
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -153,6 +165,7 @@ class InstaMainViewController: UIViewController, UIImagePickerControllerDelegate
     func refreshTableView()
     {
         let query = PFQuery(className: "Post")
+        query.limit = offset
         query.findObjectsInBackgroundWithBlock{
             (objects:[PFObject]?, error: NSError?) -> Void in
             if (error == nil)
@@ -163,6 +176,7 @@ class InstaMainViewController: UIViewController, UIImagePickerControllerDelegate
             }else{
                 print ("error")
             }
+            self.isDataLoading = false
             
         }
         tableView.reloadData()
@@ -190,6 +204,25 @@ class InstaMainViewController: UIViewController, UIImagePickerControllerDelegate
             print ("did the thing")
         }
     }
+    
+    //infinite scrolling
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        if (!isDataLoading){
+            let scrollViewContentHeight = tableView.contentSize.height
+            let scrollOffsetThreshold = scrollViewContentHeight - tableView.bounds.size.height
+            
+            // When the user has scrolled past the threshold, start requesting
+            if(scrollView.contentOffset.y > scrollOffsetThreshold && tableView.dragging) {
+                offset += increment
+                isDataLoading = true
+                self.refreshTableView()
+                print("at bottom")
+            }
+        }
+    }
+    
+    
     
     /*
     // MARK: - Navigation
