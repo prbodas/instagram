@@ -165,6 +165,29 @@ class InstaMainViewController: UIViewController, UIImagePickerControllerDelegate
         tableView.reloadData()
     }
     
+    
+    //segue prep
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        super.prepareForSegue(segue, sender: nil)
+        if (segue.identifier == "toDetails")
+        {
+            let destination = segue.destinationViewController as! DetailViewController
+            let indexPath = tableView.indexPathForCell(sender as! PostCell)
+            destination.post = [self.tableDataArray[self.tableDataArray.count - 1 - (indexPath?.row)!]]
+            let view = (sender as! PostCell).displayerView
+            let img = view.image
+            
+            if (img == nil)
+            {
+                print ("nil")
+            }
+            
+            destination.image = img!
+            
+            print ("did the thing")
+        }
+    }
+    
     /*
     // MARK: - Navigation
 

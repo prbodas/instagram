@@ -7,11 +7,37 @@
 //
 
 import UIKit
+import Parse
 
 class DetailViewController: UIViewController {
+    
+    var post:[PFObject] = []
+    
+    var image:UIImage = UIImage()
 
+    @IBOutlet weak var captionLabel: UILabel!
+    @IBOutlet weak var timestampLabel: UILabel!
+    @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var displayerView: UIImageView!
+
+    
     override func viewDidLoad() {
+    
         super.viewDidLoad()
+        
+        usernameLabel.text = post[0]["username"] as! String
+        
+        if (post[0]["timestamp"] == nil)
+        {
+            timestampLabel.text = "time hidden"
+        }else{
+            timestampLabel.text = post[0]["timestamp"] as! String
+        }
+
+        captionLabel.text = post[0]["caption"] as! String
+        
+        displayerView.image = image
+
 
         // Do any additional setup after loading the view.
     }

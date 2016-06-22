@@ -29,19 +29,6 @@ class PostCell: UITableViewCell {
     func addCellData(post:PFObject)
     {
         
-        //displayerView.image = post["media"] as! UIImage
-        
-        post.fetchIfNeededInBackgroundWithBlock{
-            (object:PFObject?, error:NSError?) -> Void in
-            if (error == nil)
-            {
-                //object?.objectForKey("media") as! PFFile
-                //self.displayerView.image =
-                self.usernameLabel.text = object?.objectForKey("user")?.username!
-            }else{
-                print ("error")
-            }
-        }
 
     }
 
