@@ -79,6 +79,13 @@ class LoginViewController: UIViewController {
         }
     }
     
+    //tap gesture handler
+    
+    @IBAction func onTap(sender: AnyObject) {
+        userField.endEditing(true)
+        passField.endEditing(true)
+    }
+    
     /*
     // MARK: - Navigation
 

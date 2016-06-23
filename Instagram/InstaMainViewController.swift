@@ -36,9 +36,6 @@ class InstaMainViewController: UIViewController, UIImagePickerControllerDelegate
         tableView.dataSource = self;
         tableView.delegate = self;
         
-        tableView.rowHeight = 300
-        //tableView.rowHeight = UITableViewAutomaticDimension
-        
         NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: "timerSelector", userInfo: nil, repeats: false)
         
     }

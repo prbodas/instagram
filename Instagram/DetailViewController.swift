@@ -25,11 +25,13 @@ class DetailViewController: UIViewController {
     
         super.viewDidLoad()
         
+        //usernameLabel.text = "%mdkfa"
+        
         if (post[0]["username"] == nil)
         {
             usernameLabel.text = "anonymous"
         }else{
-            timestampLabel.text = post[0]["username"] as! String
+            usernameLabel.text = post[0]["username"] as! String
         }
         
         if (post[0]["timestamp"] == nil)

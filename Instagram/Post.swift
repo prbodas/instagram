@@ -36,10 +36,16 @@ class Post: NSObject {
     
     class func getPFFileFromImage(image: UIImage?) -> PFFile? {
         // check if image is not nil
-        if let image = image {
+        if (image != nil && image != UIImage()) {
             // get image data and check if that is not nil
-            if let imageData = UIImagePNGRepresentation(image) {
-                return PFFile(name: "image.png", data: imageData)
+            let imgdata = UIImagePNGRepresentation(image!)
+            if (imgdata == nil)
+            {
+                print ("help")
+                return nil
+            }else{
+                var file = PFFile(name: "image.jpg", data: UIImagePNGRepresentation(image!)!)
+                return file
             }
         }
         return nil
