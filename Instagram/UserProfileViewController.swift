@@ -28,6 +28,7 @@ class UserProfileViewController: UIViewController, UITableViewDataSource, UITabl
         usernameLabel.text = PFUser.currentUser()?.username
 
         let query = PFQuery(className: "Post")
+        query.orderByDescending("createdAt")
         query.whereKey("username", equalTo: (PFUser.currentUser()?.username)!)
         
         query.findObjectsInBackgroundWithBlock  {
