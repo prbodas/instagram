@@ -8,6 +8,7 @@
 
 import UIKit
 import Parse
+import Social
 
 class DetailViewController: UIViewController {
     
@@ -56,6 +57,18 @@ class DetailViewController: UIViewController {
     //press fb share button
 
     @IBAction func fbShareButton(sender: AnyObject) {
+        
+        if SLComposeViewController.isAvailableForServiceType(SLServiceTypeFacebook){
+            var facebookSheet:SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
+            facebookSheet.setInitialText("Share on Facebook")
+            facebookSheet.addImage(displayerView.image)
+            self.presentViewController(facebookSheet, animated: true, completion: nil)
+        } else {
+            var alert = UIAlertController(title: "Accounts", message: "Please login to a Facebook account to share.", preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
+        
     }
     /*
     // MARK: - Navigation

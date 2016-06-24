@@ -20,6 +20,7 @@
 		9A2413EE1D18673600060922 /* InstaMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2413ED1D18673600060922 /* InstaMainViewController.swift */; };
 		9A2413F21D18756200060922 /* EditPicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2413F11D18756200060922 /* EditPicViewController.swift */; };
 		9A6504B61D1C91A10041C647 /* FilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6504B51D1C91A10041C647 /* FilterCell.swift */; };
+		9A6504B81D1DB5F10041C647 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A6504B71D1DB5F10041C647 /* Social.framework */; };
 		9ABAEE331D18A39C0033B70B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABAEE321D18A39C0033B70B /* LoginViewController.swift */; };
 		9ABAEE361D18E99B0033B70B /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABAEE351D18E99B0033B70B /* UserProfileViewController.swift */; };
 		9ABAEE381D19A9C30033B70B /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABAEE371D19A9C30033B70B /* Post.swift */; };
@@ -70,6 +71,7 @@
 		9A2413ED1D18673600060922 /* InstaMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstaMainViewController.swift; sourceTree = "<group>"; };
 		9A2413F11D18756200060922 /* EditPicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditPicViewController.swift; sourceTree = "<group>"; };
 		9A6504B51D1C91A10041C647 /* FilterCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterCell.swift; sourceTree = "<group>"; };
+		9A6504B71D1DB5F10041C647 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		9ABAEE321D18A39C0033B70B /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		9ABAEE351D18E99B0033B70B /* UserProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 		9ABAEE371D19A9C30033B70B /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A6504B81D1DB5F10041C647 /* Social.framework in Frameworks */,
 				3081A515CCFB01A9B77549C4 /* Pods_Instagram.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -193,6 +196,7 @@
 		F19B1FB74C970F067C939456 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9A6504B71D1DB5F10041C647 /* Social.framework */,
 				929F1A87309823B9195A6136 /* Pods_Instagram.framework */,
 				3EE6FA48F0316D8FCEF79C90 /* Pods_InstagramTests.framework */,
 				E9272915B1D1E9BE14E23A9B /* Pods_InstagramUITests.framework */,
