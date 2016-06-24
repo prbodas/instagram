@@ -19,7 +19,6 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var timestampLabel: UILabel!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var displayerView: UIImageView!
-
     
     override func viewDidLoad() {
     
@@ -54,7 +53,10 @@ class DetailViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    //press fb share button
 
+    @IBAction func fbShareButton(sender: AnyObject) {
+    }
     /*
     // MARK: - Navigation
 

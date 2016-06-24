@@ -54,7 +54,7 @@ class UserProfileViewController: UIViewController, UITableViewDataSource, UITabl
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("userPostCell", forIndexPath: indexPath) as! UserPostCell
         
-        let object:PFObject = tableDataArray[tableDataArray.count - indexPath.row - 1] as! PFObject
+        let object:PFObject = tableDataArray[indexPath.row] as! PFObject
         //print(object)
         
         let pfile = object["media"]
@@ -82,6 +82,14 @@ class UserProfileViewController: UIViewController, UITableViewDataSource, UITabl
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tableDataArray.count
+    }
+    
+    
+    
+    @IBAction func logOutUser(sender: AnyObject) {
+        PFUser.logOutInBackgroundWithBlock { (error: NSError?) in
+            self.performSegueWithIdentifier("toLoginScreen", sender: nil)
+        }
     }
     
     /*

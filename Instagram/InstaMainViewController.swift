@@ -116,7 +116,7 @@ class InstaMainViewController: UIViewController, UIImagePickerControllerDelegate
         
         let cell = tableView.dequeueReusableCellWithIdentifier("postCell", forIndexPath: indexPath) as! PostCell
         
-        let object = tableDataArray[tableDataArray.count - indexPath.row - 1]
+        let object = tableDataArray[indexPath.row]
         //print(object)
         
         let pfile = object["media"]
@@ -162,6 +162,7 @@ class InstaMainViewController: UIViewController, UIImagePickerControllerDelegate
     func refreshTableView()
     {
         let query = PFQuery(className: "Post")
+        query.orderByDescending("createdAt")
         query.limit = offset
         query.findObjectsInBackgroundWithBlock{
             (objects:[PFObject]?, error: NSError?) -> Void in
@@ -187,7 +188,7 @@ class InstaMainViewController: UIViewController, UIImagePickerControllerDelegate
         {
             let destination = segue.destinationViewController as! DetailViewController
             let indexPath = tableView.indexPathForCell(sender as! PostCell)
-            destination.post = [self.tableDataArray[self.tableDataArray.count - 1 - (indexPath?.row)!]]
+            destination.post = [self.tableDataArray[(indexPath?.row)!]]
             let view = (sender as! PostCell).displayerView
             let img = view.image
             
